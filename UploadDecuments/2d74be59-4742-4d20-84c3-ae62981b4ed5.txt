@@ -1,0 +1,226 @@
+ <div style="background-color: blue !important;cursor:pointer;position:absolute;" id="listallmissionss"></div>
+
+
+
+
+.customBorderUp {
+        border-top: 2px solid #bfbebe;
+        border-left: 2px solid #bfbebe;
+        border-right: 2px solid #bfbebe;
+    }
+
+    .cutomdownBorder {
+        border-bottom: 2px solid #bfbebe;
+        border-left: 2px solid #bfbebe;
+        border-right: 2px solid #bfbebe;
+    }
+    .textBlue{
+        color:#1515b7;
+    }
+    .textRed{
+        color:red;
+    }
+    .txtBold{
+        font-weight:bolder;
+    }
+    .SizeKustom{
+        width: 20rem;
+        margin-left: -4rem;
+        position: relative;
+        margin-top: 0%;
+        background-color: antiquewhite;
+        border-radius: 0px;
+    }
+
+
+
+//////columns///////////////
+
+
+<div class="row">
+                                        <div class="col-3 col-sm-3 m-0 p-0 customBorderUp me-2" style="width:18%">
+                                            @*<div class="customBorderUp">*@
+                                                @Html.CheckBox("ShowAllItems", true, new { @id = "ShowAllitem" })
+                                                <label class="dim col-sm-10" for="ShowAllitem">
+                                                    Show All Items
+                                                </label>
+                                            @*</div>*@
+                                            
+                                        </div>
+                                        <div class="col-2 col-sm-2 m-0 p-0 customBorderUp me-2" style="width:12%">
+                                            @*<div class="customBorderUp" style="width:72%">*@
+
+                                                <label class=" col-sm-10 text-primary texttotal txtBold textBlue">Total Items</label>
+                                            @*</div>*@
+                                        </div>
+
+                                        <div class="col-3 col-sm-3 p-0 me-2 customBorderUp" style="width:20%">
+                                            @Html.CheckBox("UpdateCost", true, new { @id = "UpdateCost", })
+                                            <label class="dim col-sm-10 upcost" for="UpateCost">
+                                                Update Cost
+                                            </label>
+                                        </div>
+                                        <div class="col-3 col-sm-3 m-0 p-0  txtBold textBlue">
+                                            @Html.CheckBox("Received", false, new { @id = "Received", })
+                                            <label class="dim col-sm-10 upcost " for="Received">
+                                                Received
+                                            </label>
+                                            <input class="d-none" id="received-invoice" value="true" />
+                                        </div>
+                                        <div class="col-lg-1 col-sm-1 m-0 p-0 cutomdownBorder customBorderUp  txtBold textBlue cp" style="width: 12%;">
+                                            <label class=" col-sm-12 text-primary" style="padding-left:12px;padding-bottom:10px">Overhead</label>
+                                            @*@Html.EditorFor(model => model.OverHead, new { htmlAttributes = new { @class = "form-control", id = "OverHead" } })
+                                            @Html.ValidationMessageFor(model => model.OverHead, "", new { @class = "text-danger db" })*@
+                                        </div>
+
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-lg-4 col-sm-4 m-0 p-0 cutomdownBorder me-2" style="width:18%">
+                                            @*<div class="">*@
+                                                @Html.CheckBox("Supplieritems", false, new { @id = "SupplierItemOnly", })
+                                                <label class="col-sm-10 lbsupplier">Supplier Item Only</label>
+                                            @*</div>*@
+                                            
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 p-0 cutomdownBorder " style="width:12%;margin-right:0.4rem">
+                                            @Html.EditorFor(model => model.TotalItems, new { htmlAttributes = new { @class = "form-control textboxcolor txtboxwidth totalitemtextbox txtBold textBlue", id = "TotalItems" } })
+                                            @Html.ValidationMessageFor(model => model.TotalItems, "", new { @class = "text-danger db" })
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 me-2 p-0 cutomdownBorder" style="width: 19.9%;margin-left:2px;">
+                                            @Html.CheckBox("UpdateOscost", false, new { @id = "UpateOscost" })
+                                            <label class="dim col-sm-10 uposcost" for="UpateOscost">
+                                                Update OS Cost
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+
+
+
+
+////////// table 
+
+
+
+
+
+ <div class="row m-0 p-0" style="">
+                            <div class="col-lg-12 col-sm-12  m-0 p-0">
+                                <div class="table-responsive overflow-auto" style="margin-right:-40px;margin-left:-40px;margin-bottom:-21px">
+                                    <table class="table border-dark" style="background-color: #c3c3d3;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:10px" class=" txtBold textBlue">Invoice#</th>
+                                                <th style="width:10px" class="txtBold textBlue">PO Date</th>
+                                                <th style="width:10px" class="txtBold textBlue">Payment Terms</th>
+                                                <th style="width:10px" class="txtBold textBlue">Total Tabacco</th>
+                                                <th style="width:10px" class="txtBold textBlue">Total Cigar</th>
+                                                <th style="width:10px" class="txtBold textBlue">Total Cigarette</th>
+                                                <th style="width:10px" class="txtBold textBlue">Cigarette Stick</th>
+                                                <th style="width:10px" class="txtBold textBlue">Date Received</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:10px">
+                                                    @Html.EditorFor(model => model.ManualInvoiceNumber, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "ManualInvoiceNo" ,@style="width: 9rem;"} })
+                                                    @Html.ValidationMessageFor(model => model.ManualInvoiceNumber, "", new { @class = "text-danger db" })
+                                                </td>
+                                                <td style="width:10px">
+                                                    @Html.EditorFor(model => model.Podate, new { htmlAttributes = new { @class = "form-control textboxwidth p-0 brd", id = "Podate", type = "text",@style="width: 8rem;" } })
+                                                    @Html.ValidationMessageFor(model => model.Podate, "", new { @class = "text-danger db" })
+                                                </td>
+                                                <td style="width:10px">
+                                                    @*Html.EditorFor(model => model.PaymentTerms, new { htmlAttributes = new { @class = "form-control p-0", id = "PaymentTerms" } })*@
+                                                    @*@Html.DropDownListFor(model => model.PaymentTerms, (IEnumerable<SelectListItem>)ViewBag.PaymentTerm, "--Choose Payment Term--", new { @class = "form-control textboxcolor brd", id = "PaymentTerms" })*@
+                                                    @Html.EditorFor(model => model.PaymentTerms, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "PaymentTerms", placeholder = "Payment Term", @readonly = "readonly",@style="width: 9rem;" } })
+                                                    @Html.ValidationMessageFor(model => model.PaymentTerms, "", new { @class = "text-danger db" })
+                                                </td>
+                                                <td style="width:10px">
+                                                    @Html.EditorFor(model => model.TotalTobacco, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "TotalTobacco" ,@style="width: 9rem;"} })
+                                                    @Html.ValidationMessageFor(model => model.TotalTobacco, "", new { @class = "text-danger db" })
+                                                </td>
+                                                <td style="width:10px">
+                                                    @Html.EditorFor(model => model.TotalCigar, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "TotalCigar",@style="width: 9rem;" } })
+                                                    @Html.ValidationMessageFor(model => model.TotalCigar, "", new { @class = "text-danger db" })
+                                                </td>
+                                               <td style="width:10px">
+                                                    @Html.EditorFor(model => model.TotalCigarette, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "TotalCigarette" ,@style="width: 9rem;"} })
+                                                    @Html.ValidationMessageFor(model => model.TotalCigarette, "", new { @class = "text-danger db" })
+                                                </td>
+                                                <td style="width:10px">
+                                                    @Html.EditorFor(model => model.CigaretteStick, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "CigaretteStock" ,@style="width: 9rem;"} })
+                                                    @Html.ValidationMessageFor(model => model.CigaretteStick, "", new { @class = "text-danger db" })
+                                                </td>
+                                               <td style="width:10px">
+
+                                                    @Html.EditorFor(model => model.ReceivedDate, new { htmlAttributes = new { @class = "form-control p-0 brd", id = "DateReceived", type = "text" ,@style="width: 8rem;"} })
+                                                    @Html.ValidationMessageFor(model => model.ReceivedDate, "", new { @class = "text-danger db" })
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+///////////side table////           txtInvoiceNumber
+
+
+
+ <div class="col-lg-4 col-sm-4">
+                                    <div class=" txtBold textBlue" style="text-align:center"><h3 id="txtInvoiceNumber" style="font-weight:bold;display:inline">@ViewBag.Invoicenumber</h3></div>
+                                    <h4 class=" textRed" style="display:inline; margin-left:61%">
+                                        @Html.HiddenFor(model => model.InvoiceNumber, new { @class = "form-control", id = "" })
+                                        @Html.CheckBox("Report", false, new { @id = "Report", @class = "" })
+                                        <label class="dim col-sm-4 " for="LocalTextPaidBySupplier">
+                                            Report
+                                        </label>
+                                    </h4>
+
+                                    <table class="table-bordered border-dark tableset">
+                                        <tr>
+                                            <th class=" txtBold textBlue">SubTotal</th>
+                                            <td>
+                                                @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control", id = "SubTotal" } })
+                                                @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger db" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class=" txtBold textBlue">Freight</th>
+                                            <td>
+                                                @Html.EditorFor(model => model.Freight, new { htmlAttributes = new { @class = "form-control", id = "Freight", onkeyup = "CalculatetaxPlusDiscount()" } })
+                                                @Html.ValidationMessageFor(model => model.Freight, "", new { @class = "text-danger db" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class=" txtBold textBlue">Tax @Html.CheckBox("IsTax", false, new { @id = "IsTax", })</th>
+                                            <td>
+                                                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", id = "Tax", onkeyup = "CalculatetaxPlusDiscount()" } })
+                                                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger db" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class=" txtBold textBlue">Other</th>
+                                            <td>
+                                                @Html.EditorFor(model => model.Other, new { htmlAttributes = new { @class = "form-control", id = "Other", onkeyup = "CalculatetaxPlusDiscount()" } })
+                                                @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger db" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class=" txtBold textBlue">Total</th>
+                                            <td>
+                                                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", id = "Total", onkeyup = "CalculatetaxPlusDiscount()" } })
+                                                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger db" })
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>

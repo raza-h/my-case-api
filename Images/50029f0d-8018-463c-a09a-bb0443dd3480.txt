@@ -1,0 +1,130 @@
+    $('#customQuantity').keydown(function(e) {
+        
+        if (e.which == 13) {
+            var customQty=$('#customQuantity').val();
+            //GetItemDataAppend();
+            return false;
+        }
+    });
+    // function GetItemDataAppend(){
+    //    var itemstockNo= $('#itemStockID').val();
+    //     $.ajax({
+
+    //        url: '@Url.Action("GetProductDataWithStockItemNo", "Purchase")',
+    //        async: false,
+    //        Type: 'GET',
+    //        contentType: "application/json;",
+    //        data: { 
+    //            id: itemstockNo
+    //        },
+    //        dataType: "json",
+    //        success: function(data) {
+    //            console.log("yahan",data);
+    //            $(".add-row").trigger("click");
+    //             var number = 0;
+    //            $('#mytable tr').each(function(index, tr) {
+    //                number++;
+    //            });
+    //            var index=number-1;
+    //            var qustmQty=$('#customQuantity').val();
+    //            GetItemByIDa(data.id, index,qustmQty);
+    //            $('#InventoryLookupModal').modal('hide');
+    //        },
+
+    //    });
+    //}
+
+    //function GetItemByIDa(val, index,qustmQty) {
+    //    debugger;
+    //    var seqnum = index;
+    //    var id = val;
+    //    $.ajax({
+    //        type: "GET",
+    //        url: '@Url.Action("GetItemStockFinancialByID", "Items")',
+
+    //        data: {
+    //            id: id
+    //        },
+    //        dataType: 'json',
+    //        success: function(data) {
+    //            debugger;
+    //            console.log("Hemlooooooooo",data);
+    //            $("#rowid-" + index).find("#productId").val(data.id);
+    //            if (data != null && data != "") {
+    //                var count = 0;
+    //                var exist = 0;
+    //                var notexist = true;
+    //                $('#mytable tr').each(function(index, tr) {
+    //                    if (count > 0) {
+    //                        var Id = tr.attributes["id"].value.split("rowid-")[1];
+    //                        /*   var productId = parseInt($("#rowid-" + Id).find("#productId").val());*/
+    //                        var productId = parseInt($("#itemid-" + Id).html());
+    //                        if (productId === data.id) {
+    //                            exist++;
+
+    //                        }
+    //                        if (exist > 1) {
+    //                            swal("Error!", "Item Already Added!", "error");
+    //                            notexist = false;
+
+    //                        }
+
+    //                    }
+
+    //                    count++;
+    //                });
+
+    //                if (notexist === true) {
+    //                    $("#rowid-" + seqnum).find("#productId").val(data.id);
+    //                    $("#Description-" + seqnum).text(data.name);
+    //                    $("#Description-" + seqnum).attr('contenteditable', 'false');
+    //                    $("#Discount-" + seqnum).text("0.00" + "%");
+    //                    $("#Qty-" + seqnum).text(qustmQty);
+                        
+    //                    var tr = $("#rowid-" + seqnum).closest("tr");
+    //                    tr.attr('data-itemcode', data.itemNumber);
+    //                    //Add isOutStateTax
+    //                    var vendorid = $("#setvendorid").text();
+    //                    if (vendorid != "") {
+    //                        var Tax = window.outStateTax;
+    //                        var taxPrice = [parseFloat(data.retail)] * [(parseFloat(Tax) / 100)];
+    //                        var newPrice = parseFloat(data.retail) + parseFloat(taxPrice);
+    //                        newPrice = parseFloat(newPrice).toFixed(2);
+    //                        var newcostPrice = parseFloat(data.cost) + parseFloat(taxPrice);
+    //                        newcostPrice = parseFloat(newcostPrice).toFixed(2);
+    //                        $("#Retail-" + seqnum).text("$" + newPrice);
+    //                        $("#Price-" + seqnum).text("$" + newcostPrice);
+    //                        $("#Amount-" + seqnum).text("$" + newcostPrice);
+    //                    }
+    //                    else {
+    //                        $("#Retail-" + seqnum).text("$" + data.retail);
+    //                        $("#Price-" + seqnum).text("$" + data.cost);
+    //                        $("#Amount-" + seqnum).text("$" + data.cost);
+    //                    }
+
+    //                    $("#itemid-" + seqnum).text(data.id);
+
+                        
+    //                    if (data.stock != null && data.stock != "") {
+    //                        $("#StockItemNumber-" + seqnum).text(data.stock.stockItemNumber);
+    //                    }
+    //                    QuantityMultipyPrice(index);
+    //                    CountTotalOfAllTD();
+    //                    $("#listallmissions").empty();
+
+    //                }
+    //                else {
+    //                    swal("Error!", "Item Already Added!", "error");
+    //                    RemoveRow(index);
+    //                }
+    //            }
+
+
+    //        },
+    //        error: function(xhr, status, error) {
+    //            var errorMessage = xhr.status + ': ' + xhr.statusText
+    //        },
+    //    });
+
+
+    //}

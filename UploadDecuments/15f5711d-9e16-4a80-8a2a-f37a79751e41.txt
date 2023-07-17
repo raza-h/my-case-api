@@ -1,0 +1,91 @@
+{
+  "documents": [
+    {
+      "documentBase64": "base64 string",
+      "documentId": 123,
+      "fileExtension": "pdf",
+      "name": "document"
+    }
+  ],
+  "emailSubject": "Simple Signing Example",
+  "recipients": {
+    "signers": [
+      {
+        "email": "haseeb.shaukat@ab-sol.com",
+        "name": "HaseebShaukat",
+        "recipientId": "1"
+      },
+      {
+        "email": "sufyan.afzal@ab-sol.net",
+        "name": "Sufyan Afzal",
+        "recipientId": "2"
+      }
+    ]
+  },
+  "status": "sent"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var envelopeData = new
+                {
+                    emailSubject = "Your envelope subject",
+                    emailBlurb = "Your envelope message",
+                    status = "sent",
+                    recipients = new
+                    {
+                        signers = new[]
+                        {
+                                new
+                                {
+                                    email = sign.RecipientEmail,
+                                    name = sign.RecipientName,
+                                    recipientId = "1",
+                                    tabs = new
+                                    {
+                                        signHereTabs = new[]
+                                        {
+                                            new
+                                            {
+                                                anchorString = "Please Sign Here",
+                                                anchorUnits = "pixels",
+                                                anchorXOffset = "10",
+                                                anchorYOffset = "10"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                    },
+                    documents = new[]
+                    {
+                            new
+                            {
+                                documentId = 123,
+                                name = sign.DocumentName,
+                                fileExtension = "pdf",
+                                documentBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(sign.DocumentString))
+                            }
+                        }
+                };

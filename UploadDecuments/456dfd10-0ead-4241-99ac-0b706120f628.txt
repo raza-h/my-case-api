@@ -1,0 +1,381 @@
+
+<script>
+    //for customer
+         function AppendAllMissionsss(event) {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetCustomerauto", "Purchase")',
+            async: false,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                var inner = '';
+                var opts = jQuery.parseJSON(JSON.stringify(data));
+                if (opts.length > 0) {
+                    //$("#matchedCharityTemplate").show();
+                }
+                $("#listallmissionsss").empty();
+                $.each(opts, function (i, d) {
+                    console.log("datattata",d)
+                    inner = '';
+                    inner += '<div class="setsearchbox anitem dropdown-menu searchitem cp" onclick="GetItemByIDdd(' + d.id + ')";>';
+                    if (i == 0) {
+                        inner += '<div class="searchheader">Company Name</div><div class="searchheader">Account Title</div></br>';
+                    }
+                    if (d.company != null) {
+                        inner += '<div class="item_nameee di w-50" data-rel="' + d.id + '">' + d.company + '</div><div class="di">' + d.accountTitle + '</div></br>';
+
+                    } else {
+                        inner += '<div class="item_nameee di w-50" data-rel="' + d.id + '">' + d.company + '</div><div class="di">' + d.accountTitle + '</div></br>';
+                    }
+                    inner += '</div>';
+                    // $("#listallmissions").modal('show');
+                    $("#listallmissionsss").append(inner);
+
+
+                });
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText
+            },
+        });
+    };
+    var Increament = 0;
+    function GetAllMatchedItemsss(event) {
+        if (Increament!=0) {
+            AppendAllMissionsss();
+        }
+        var naminggg = $(".searchnameee").val();
+        if (naminggg == "") {
+            $(".item_nameee").parent().hide();
+        }
+        else {
+            var text = naminggg;
+            var items = $(".item_nameee");
+            //first, hide all:
+            items.parent().hide();
+
+            //show only those matching user input:
+            items.filter(function () {
+                return $(this).text().toLowerCase().indexOf(text) == 0;
+            }).parent().show();
+        }
+        Increament++;
+    };
+
+    function GetItemByIDdd(val) {
+
+        var id = val;
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetCustomerByID", "Purchase")',
+
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log("hello",data);
+                $('#customerCode').val(data.customerCode);
+                $(".searchnameee").val(data.company);
+                $("#listallmissionsss").empty();
+                
+            },
+
+        });
+    }
+    //for item
+     function AppendAllMissionss(event) {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("AutoCompleteSearchItem", "Items")',
+            async: false,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                var inner = '';
+                var opts = jQuery.parseJSON(JSON.stringify(data));
+                if (opts.length > 0) {
+                    //$("#matchedCharityTemplate").show();
+                }
+                $("#listallmissionss").empty();
+                $.each(opts, function (i, d) {
+                    inner = '';
+                    inner += '<div class="setsearchbox anitem dropdown-menu searchitem cp" onclick="GetItemByIDd(' + d.id + ')";>';
+                    if (i == 0) {
+                        inner += '<div class="searchheader">Description</div><div class="searchheader">Qty</div></br>';
+                    }
+                    if (d.stock != null) {
+                        inner += '<div class="item_namee di w-50" data-rel="' + d.id + '">' + d.name + '</div><div class="di">' + d.stock.quantity + '</div></br>';
+
+                    } else {
+                        inner += '<div class="item_namee di w-50" data-rel="' + d.id + '">' + d.name + '</div><div class="di">' + 0 + '</div></br>';
+                    }
+                    inner += '</div>';
+
+
+                    // $("#listallmissions").modal('show');
+                    $("#listallmissionss").append(inner);
+
+
+                });
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText
+            },
+        });
+    };
+    var Increament = 0;
+    function GetAllMatchedItemss(event) {
+        if (Increament!=0) {
+            AppendAllMissionss();
+        }
+        var namingg = $(".searchnamee").val();
+        if (namingg == "") {
+            $(".item_namee").parent().hide();
+        }
+        else {
+            var text = namingg;
+            var items = $(".item_namee");
+            //first, hide all:
+            items.parent().hide();
+
+            //show only those matching user input:
+            items.filter(function () {
+                return $(this).text().toLowerCase().indexOf(text) == 0;
+            }).parent().show();
+        }
+        Increament++;
+    };
+
+    function GetItemByIDd(val) {
+
+        var id = val;
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetItemsFetch", "Purchase")',
+
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log("hello",data);
+                $('#itemDescription').val(data.name);
+                $('#itemNumber').val(data.itemNumber);
+                $('#itemRetail').val('$'+data.retail);
+                $('#itemPrice').val('$'+data.retail);
+                if(data.quantityCase !=null){
+                    $('#caseQTY').val('$'+data.quantityCase);
+                }else{
+                    $('#caseQTY').val('$');
+                }
+                $('#unitRetail').val('$'+data.unitCharge);
+                $("#listallmissionss").empty();
+                $(".searchnamee").val('');
+            },
+
+        });
+    }
+
+
+
+
+     $('#itemStockID').keydown(function(e) {
+        
+        if (e.which == 13) {
+            GetItemData();
+            return false;
+        }
+    });
+    $('#customerCode').keydown(function(e) {
+        
+        if (e.which == 13) {
+            GetCustomerData();
+            return false;
+        }
+    });
+
+        $('#customQuantity').keydown(function(e) {
+        
+        if (e.which == 13) {
+            var customQty=$('#customQuantity').val();
+            GetItemDataAppend();
+            return false;
+        }
+    });
+     function GetItemDataAppend(){
+        var itemstockNo= $('#itemStockID').val();
+         $.ajax({
+
+            url: '@Url.Action("GetProductDataWithStockItemNo", "Purchase")',
+            async: false,
+            Type: 'GET',
+            contentType: "application/json;",
+            data: { 
+                id: itemstockNo
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log("yahan",data);
+                $(".add-row").trigger("click");
+                 var number = 0;
+                $('#mytable tr').each(function(index, tr) {
+                    number++;
+                });
+                var index=number-1;
+                var qustmQty=$('#customQuantity').val();
+                GetItemByIDa(data.id, index,qustmQty);
+                $('#InventoryLookupModal').modal('hide');
+            },
+
+        });
+    }
+
+    function GetItemByIDa(val, index,qustmQty) {
+        debugger;
+        var seqnum = index;
+        var id = val;
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetItemStockFinancialByID", "Items")',
+
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                debugger;
+                console.log("Hemlooooooooo",data);
+                $("#rowid-" + index).find("#productId").val(data.id);
+                if (data != null && data != "") {
+                    var count = 0;
+                    var exist = 0;
+                    var notexist = true;
+                    $('#mytable tr').each(function(index, tr) {
+                        if (count > 0) {
+                            var Id = tr.attributes["id"].value.split("rowid-")[1];
+                            /*   var productId = parseInt($("#rowid-" + Id).find("#productId").val());*/
+                            var productId = parseInt($("#itemid-" + Id).html());
+                            if (productId === data.id) {
+                                exist++;
+
+                            }
+                            if (exist > 1) {
+                                swal("Error!", "Item Already Added!", "error");
+                                notexist = false;
+
+                            }
+
+                        }
+
+                        count++;
+                    });
+
+                    if (notexist === true) {
+                        $("#rowid-" + seqnum).find("#productId").val(data.id);
+                        $("#Description-" + seqnum).text(data.name);
+                        $("#Description-" + seqnum).attr('contenteditable', 'false');
+                        $("#Discount-" + seqnum).text("0.00" + "%");
+                        $("#Qty-" + seqnum).text(qustmQty);
+                        
+                        var tr = $("#rowid-" + seqnum).closest("tr");
+                        tr.attr('data-itemcode', data.itemNumber);
+                        //Add isOutStateTax
+                        var vendorid = $("#setvendorid").text();
+                        if (vendorid != "") {
+                            var Tax = window.outStateTax;
+                            var taxPrice = [parseFloat(data.retail)] * [(parseFloat(Tax) / 100)];
+                            var newPrice = parseFloat(data.retail) + parseFloat(taxPrice);
+                            newPrice = parseFloat(newPrice).toFixed(2);
+                            var newcostPrice = parseFloat(data.cost) + parseFloat(taxPrice);
+                            newcostPrice = parseFloat(newcostPrice).toFixed(2);
+                            $("#Retail-" + seqnum).text("$" + newPrice);
+                            $("#Price-" + seqnum).text("$" + newcostPrice);
+                            $("#Amount-" + seqnum).text("$" + newcostPrice);
+                        }
+                        else {
+                            $("#Retail-" + seqnum).text("$" + data.retail);
+                            $("#Price-" + seqnum).text("$" + data.cost);
+                            $("#Amount-" + seqnum).text("$" + data.cost);
+                        }
+
+                        $("#itemid-" + seqnum).text(data.id);
+
+                        
+                        if (data.stock != null && data.stock != "") {
+                            $("#StockItemNumber-" + seqnum).text(data.stock.stockItemNumber);
+                        }
+                        QuantityMultipyPrice(index);
+                        CountTotalOfAllTD();
+                        $("#listallmissions").empty();
+
+                    }
+                    else {
+                        swal("Error!", "Item Already Added!", "error");
+                        RemoveRow(index);
+                    }
+                }
+
+
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText
+            },
+        });
+
+
+    }
+
+
+   
+
+    function GetCustomerData(){
+        var id= $('#customerCode').val();
+         $.ajax({
+
+            url: '@Url.Action("GetCustomerBycustomerCode", "Purchase")',
+            async: false,
+            Type: 'GET',
+            contentType: "application/json;",
+            data: { 
+                id: id
+            },
+            dataType: "json",
+            success: function(data) {
+                 $('#customerCode').val(data.customerCode);
+                $(".searchnameee").val(data.company);
+            },
+
+        });
+    }
+    function GetItemData(){
+        var itemstockNo= $('#itemStockID').val();
+         $.ajax({
+
+            url: '@Url.Action("GetProductDataWithStockItemNo", "Purchase")',
+            async: false,
+            Type: 'GET',
+            contentType: "application/json;",
+            data: { 
+                id: itemstockNo
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                debugger;
+                $('#itemDescription').val(data.name);
+                $('#itemNumber').val(data.itemNumber);
+                $('#itemRetail').val('$'+data.retail);
+                $('#itemPrice').val('$'+data.retail);
+                if(data.quantityCase !=null){
+                    $('#caseQTY').val('$'+data.quantityCase);
+                }else{
+                    $('#caseQTY').val('$');
+                }
+                $('#unitRetail').val('$'+data.unitRetail);
+            },
+
+        });
+    }
+</script>
