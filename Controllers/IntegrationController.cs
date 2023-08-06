@@ -22,6 +22,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Hosting;
+using MyCaseApi.ViewModels;
 
 namespace MyCaseApi.Controllers
 {
@@ -35,12 +36,14 @@ namespace MyCaseApi.Controllers
         private readonly UserManager<User> userManager;
         private readonly DocuSignHub _docuSignHub;
         private readonly IWebHostEnvironment env;
+        private readonly EmailService emailService;
         public IntegrationController(IAttorneyAdmin attorneyAdmin, UserManager<User> userManager, ApiDbContext dbContext, DocuSignHub docuSignHub, IWebHostEnvironment env) : base(env)
         {
             this.attorneyAdmin = attorneyAdmin;
             this.userManager = userManager;
             this.dbContext = dbContext;
             _docuSignHub = docuSignHub;
+            this.emailService = new EmailService();
             this.env = env;
         }
 
@@ -74,6 +77,8 @@ namespace MyCaseApi.Controllers
                                     model.RecipientId = getUser.Id;
                                     model.RecipientName = getUser.FirstName + getUser.LastName;
                                     model.RecipientEmail = getUser.Email;
+                                    emailService.SendSignEmail(model.RecipientEmail);
+
                                     signers.Add(new
                                     {
                                         email = model.RecipientEmail,
@@ -87,6 +92,7 @@ namespace MyCaseApi.Controllers
                         model.SignersArray = signers.ToArray();
                         if (model.SignersArray != null)
                         {
+
                             model.DocumentId = "1";
                             var adddata = await _docuSignHub.SendEnvelope(model);
                             if (adddata != null)

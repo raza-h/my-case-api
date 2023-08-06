@@ -11,6 +11,9 @@ namespace MyCaseApi.Interfaces
         Task<int> AddDecuments(Decuments Decument);
         Task<List<Decuments>> GetDecuments();
         Task<Decuments> GetDecumentsByid(int Id);
+        Task<Decuments> UpdateDecument(Decuments Decument);
+
+        Task DeleteDecumentAtPath(int id);
      
         Task DeleteDecuments(int Id);
     }

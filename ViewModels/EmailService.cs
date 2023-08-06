@@ -33,6 +33,31 @@ namespace MyCaseApi.ViewModels
                 return false;
             }
         }
+        public bool SendSignEmail(string toEmail)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("razah12145@gmail.com");
+                mail.To.Add(toEmail);
+                mail.Subject = "Solicited Sign on Document";
+                mail.Body = ConvertSignHtml("Attorney");
+                mail.IsBodyHtml = true;
+
+                SmtpServer.Port = 587;
+                SmtpServer.UseDefaultCredentials = false;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("razah12145gmail.com", "pzvyhkqbvjvsoyyz");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public bool SendEmail(string toEmail, string Attorney, string url = "")
         {
             try
@@ -134,7 +159,29 @@ namespace MyCaseApi.ViewModels
             html += "<td style='text-align:center;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;'>&copy; Absol Case";
             html += "</td></tr></tbody></table></td></tr></tbody></table></div></td></tr></tbody></table>";
             return html;
-        }  
+        }
+
+        private string ConvertSignHtml(string Attorney)
+        {
+            string html = string.Empty;
+            html += "<style>body { margin-top: 20px;} </style>";
+            html += "<table class='body-wrap' style='width:100%;'><tbody><tr><td></td><td>";
+            html += "<div style='box-sizing:border-box;max-width:600px;margin:0 auto;padding:20px;'><table><tbody><tr>";
+            html += "<td style='padding:30px;border:3px solid #67a8e4;border-radius:7px;'><meta><table><tbody><tr>";
+            html += "<td style='font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;padding: 0 0 20px;'>";
+            html += $"{Attorney} has solicited your signature on a document.</td></tr><tr>";
+            html += "<td style='font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;padding: 0 0 20px;'>";
+            html += "If you want to sign, please click the button below.";
+            html += "</td></tr><tr><td style ='padding: 0 0 20px;'>";
+            html += "<a href='#' class='btn-primary' itemprop='url' style='font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold;cursor: pointer; display: inline-block; border-radius: 5px;background-color: #f06292;border-color: #f06292; border-style: solid; border-width: 8px 16px;'>";
+            html += "Sign</a></td></tr><tr>";
+            html += "<td class='content-block' style='font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;padding: 0 0 20px;'>";
+            html += "<b>Muhammad Usman</b><p>Support Team</p></td></tr><tr>";
+            html += "<td style='text-align:center;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;'>&copy; Absol Case";
+            html += "</td></tr></tbody></table></td></tr></tbody></table></div></td></tr></tbody></table>";
+            return html;
+        }
+
         private string ConvertHtmlToString(string Attorney, string url)
         {
             string html = string.Empty;

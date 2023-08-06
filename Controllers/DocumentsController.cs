@@ -214,6 +214,42 @@ namespace MyCaseApi.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("ReplaceDocument")]
+        public async Task<IActionResult> ReplaceDocument(Decuments model)
+        {
+            try
+            {
+                model.DecumentPath = await SaveFileAsync(model.File, model.extention);
+                Decuments existing = await decumentsService.GetDecumentsByid(model.Id);
+                existing.DecumentPath = model.DecumentPath;
+                await decumentsService.UpdateDecument(existing);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteDocumentAtPath")]
+        public async Task<IActionResult> DeleteDocumentAtPath(int Id)
+        {
+            try
+            {
+                await decumentsService.DeleteDecumentAtPath(Id);
+                return Ok();
+            }
+
+            catch(Exception ex)
+            {
+                return Content(ex.Message);
+            }
+
+        }
+
         [HttpDelete]
         [Route("DeleteDocuments")]
         public async Task<IActionResult> DeleteDocuments(int Id)
@@ -326,6 +362,20 @@ namespace MyCaseApi.Controllers
             {
                 await decumentsService.DeleteDecuments(Id);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetRootPath")]
+        public async Task<IActionResult> GetRootPath()
+        {
+            try
+            {
+                return Ok(env.ContentRootPath);
             }
             catch (Exception ex)
             {

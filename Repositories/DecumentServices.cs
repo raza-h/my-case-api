@@ -20,6 +20,22 @@ namespace MyCaseApi.Repositories
             this.dbContext = dbContext;
             this.env = env;
         }
+
+        public async Task<Decuments> UpdateDecument(Decuments model)
+        {
+            try
+            {
+                dbContext.Decuments.Update(model);
+                await dbContext.SaveChangesAsync();
+                return model;
+            }
+
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<int> AddDecuments(Decuments model)
         {
             try
@@ -59,8 +75,7 @@ namespace MyCaseApi.Repositories
             }
         }
 
-
-        public async Task DeleteDecuments(int Id)
+        public async Task DeleteDecumentAtPath(int Id)
         {
             try
             {
@@ -75,6 +90,19 @@ namespace MyCaseApi.Repositories
                     var fileInfo = new System.IO.FileInfo(_decumentPath);
                     fileInfo.Delete();
                 }
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task DeleteDecuments(int Id)
+        {
+            try
+            {
+                await DeleteDecumentAtPath(Id);
+                Decuments model = await dbContext.Decuments.Where(x => x.Id == Id).FirstOrDefaultAsync();
                 dbContext.Entry(model).State = EntityState.Deleted;
                 await dbContext.SaveChangesAsync();
             }
@@ -82,7 +110,6 @@ namespace MyCaseApi.Repositories
             {
                 throw ex;
             }
-
         }
 
     }
